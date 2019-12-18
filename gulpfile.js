@@ -43,19 +43,6 @@ gulp.task('image',function(){
 })
 
 
-
-//将js代码自动插入HTML文件中
-// $ npm install gulp-browsersync-inject --save-dev
-// Example
-// var browserSyncInject = require('gulp-browsersync-inject');//引包
- 
-// gulp.task('serve', function(){
-//   gulp.src('src/index.html')
-//   .pipe(browserSyncInject({port: 5000})) // BrowserSync will output the proxy port
-//   .pipe(gulp.dest('dist/'));
-  
-// });
-
 // 4、html复制压缩
 // 通过命令行输入：gulp copy执行，则在dist里面就复制好了
 //压缩HTML也是需要插件npm install --save-dev gulp-htmlnano
@@ -70,7 +57,6 @@ gulp.task('html',function(){
 
 
 
-
 //5，测试的时候 Install，浏览器上，统一文件多个窗口进行同步操作
 // npm install browser-sync --save-dev
  var browserSync=require('browser-sync').create();//此时你是有用的
@@ -81,10 +67,25 @@ gulp.task('serve', function() {
             baseDir: "./dist/"//运行时直接在浏览器打开dist目录
         }
     });
-    // watch监听 globs 并在发生更改时运行任务
-    gulp.watch('src/*.html',gulp.series('html'));//启动时自动监视
+    // watch监听 globs 并在发生更改时运行任务,启动时自动监视
+    gulp.watch('src/*.html',gulp.series('html'));//将任务函数和/或组合操作组合成更大的操作，这些操作将按顺序依次执行。
 	gulp.watch('src/style/*.less',gulp.series('style'));
 	gulp.watch('src/js/*.js',gulp.series('scripts'));
 	gulp.watch('src/image/*.*',gulp.series('image'));
 });
+
+
+
+//将js代码自动插入HTML文件中
+// $ npm install gulp-browsersync-inject --save-dev
+// Example
+// var browserSyncInject = require('gulp-browsersync-inject');//引包
+ 
+// gulp.task('serve', function(){
+//   gulp.src('src/index.html')
+//   .pipe(browserSyncInject({port: 5000})) // BrowserSync will output the proxy port
+//   .pipe(gulp.dest('dist/'));
+  
+// });
+gulp.task('default',gulp.parallel('html','style','scripts','image'));
 
